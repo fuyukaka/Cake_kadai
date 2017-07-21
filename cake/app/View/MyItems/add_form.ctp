@@ -1,26 +1,22 @@
-<form method="post" action="./add">
+<?php echo $this->Form->create("MyItem",array('type'=>'post','url'=>'./add')); ?>
 <table>
 <tr>
 			<td>ID:</td>
-			<td><input type="text" name="id"
-								value=""/></td>
+			<td><?php echo $this->Form->text('id', array('default' =>"")); ?></td>
 		</tr>
 
 		<tr>
 			<td>商品名:</td>
-			<td><input type="text" name="item_name"
-								value=""/></td>
+			<td><?php echo $this->Form->text('item_name', array('default' =>"")); ?></td>
 		</tr>
 		<tr>
 			<td>価格:</td>
-			<td><input type="text" name="price"
-								value=""/></td>
+			<td><?php echo $this->Form->text('price', array('default' =>"")); ?></td>
 		</tr>
 		<tr>
 			<td>備考:</td>
-			<td><input type="text" name="keyword"
-								value=""/></td>
+			<td><?php echo $this->Form->text('keyword', array('default' =>"")); ?></td>
 		</tr>
 </table>
-
-<input type="submit" value="登録">
+<?php
+ echo $this->Form->end("更新"); ?>

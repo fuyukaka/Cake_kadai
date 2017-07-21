@@ -8,17 +8,22 @@ class MyItemsController extends AppController
 	//メニューページ
 	function index()
 	{
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
+	}
+
+	function menu()
+	{
+		$this->layout = "MyItems";
 	}
 
 	//一覧
 	function list()
 	{
 		//レイアウト
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 
 		// データベースから取り出し
-		$datas = $this->MyItem->find('all');
+		$datas = $this->MyItem->find('all',array('order' => array('MyItem.id ASC')));
 		$this->set('datas',$datas);
 
 	}
@@ -27,19 +32,18 @@ class MyItemsController extends AppController
 	function find()
 	{
 		//レイアウト
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 
 		//データベースから取り出し
-		if (isset($this->request->data["id"]))
+		if (isset($this->data['MyItem']['id']))
 		{
-			$id = $this->request->data["id"];
+			$id = $this->request->data['MyItem']['id'];
+
 			$search = array('conditions' =>array('MyItem.id' => $id));
-			$result = $this->MyItem->find('first',$search);
-
+			$data = $this->MyItem->find('first',$search);
 		}
-
 		//ID検索の結果判定
-		$count = count($result);
+		$count = count($data);
 
 		if(!($count==0))
 		{
@@ -51,9 +55,10 @@ class MyItemsController extends AppController
 		}
 
 		//変数セット
-		$this->set('result',$result);
+		$this->set('data',$data);
 		$this->set('msg',$msg);
 		$this->set('count',$count);
+		$this->set('id',$id);
 	}
 
 	//更新
@@ -61,46 +66,45 @@ class MyItemsController extends AppController
 	{
 		// レイアウト関係
 		$this->autoLayout = false;
+		$id = $this->request->data['MyItem']['id'];
+
 
 		//データの更新
-		$result=$this->MyItem->save($this->request->data);
+		$data = $this->MyItem->save($this->request->data);
 
 		//結果の判定
-		if(isset($result))
+		if($data)
 		{
-			$done = "更新しました";
+			$msg = "更新しました";
 		}
 		else
 		{
-			$done = "更新できませんでした";
+			$msg = "更新できませんでした";
 		}
 
-		$this->set('done',$done);
+		$this->set('msg',$msg);
 
     }
 
     //ID検索ページ
 	function changepage()
 	{
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 	}
 
 	//登録入力ページ
 	function addForm()
 	{
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 	}
 
 	//登録
 	function add()
 	{
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 
 		//データの受け取り
-		$id = $this->data["id"];
-		$item_name = $this->data["item_name"];
-		$price = $this->data["price"];
-		$keyword = $this->data["keyword"];
+		$id = $this->request->data['MyItem']['id'];
 
 		//IDの入力チェック
 		if(isset($id))
@@ -116,10 +120,8 @@ class MyItemsController extends AppController
 			{
 				$msg = null;
 
-				$data = array('MyItem'=>array('id'=>$id,'item_name'=>$item_name,'price'=>$price,'keyword'=>$keyword));
-
 				//データの登録
-				$result=$this->MyItem->save($data);
+				$data = $this->MyItem->save($this->request->data);
 			}
 
 			//かぶっていたら
@@ -132,17 +134,19 @@ class MyItemsController extends AppController
 		//入力されていない場合の登録
 		else
 		{
-			$data = array('MyItem'=>array('item_name'=>$item_name,'price'=>$price,'keyword'=>$keyword));
-
 			//データの登録
-			$result=$this->MyItem->save($data);
+			$data = $this->MyItem->save($this->request->data);
 		}
 
 
 		//結果の判定
-		if(isset($result))
+		if (is_array($data))
 		{
 			$msg = "登録しました";
+		}
+		else
+		{
+			$msg = "登録できませんでした";
 		}
 
 		$this->set('msg',$msg);
@@ -152,12 +156,14 @@ class MyItemsController extends AppController
 	function deleteFind()
 	{
 		//レイアウト
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
+
+		$id = $this->request->data['MyItem']['id'];
+
 
 		//データベースから取り出し
-		if (isset($this->data['id']))
+		if (isset($id))
 		{
-			$id = $this->data['id'];
 			$search = array('conditions' =>array('MyItem.id' => $id));
 			$data = $this->MyItem->find('first',$search);
 		}
@@ -185,16 +191,16 @@ class MyItemsController extends AppController
 	function delete()
 	{
 		//レイアウト
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 
-		$id = $this->data["id"];
+		$id = $this->request->data['MyItem']['id'];
 
 		if (isset($id))
 		{
-			$result = $this->MyItem->delete($id);
+			$data = $this->MyItem->delete($id);
 		}
 
-		if($result)
+		if($data)
 		{
 			$msg = "削除しました";
 		}
@@ -211,7 +217,7 @@ class MyItemsController extends AppController
 	function deletepage()
 	{
 		//レイアウト
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 	}
 
 

@@ -1,56 +1,71 @@
-<form method="post" action="./deleteFind">
-	<input type="text" name="id" value="<?php print($id)?>" />
-	<input type="submit" value="ID検索"/>
-</form>
-
+<br>
+<div align="center">
 <table>
-	<form method="post" action="./delete">
-		<?php if(!($count==0))
+<tr>
+<?php echo $this->Form->create("MyItem",array('type'=>'post','url'=>'./deleteFind'));
+if(!($count==0))
+{
+ echo "<th>".$this->Form->text('id', array('default' =>$data['MyItem']['id']));
+ }
+ else
+ {
+ echo  "<th>".$this->Form->text('id', array('default' =>$id));
+ }
+echo  "<th>".$this->Form->end("ID検索"); ?>
+</tr>
+</table>
+<br><br>
+<table id="main_table" border="1">
+	<?php echo $this->Form->create("MyItem",array('type'=>'post','url'=>'./delete'));
+		if(!($count==0))
 			{	?>
 
 		<tr>
-			<td>商品名:</td>
-			<td><?php echo $data['MyItem']['item_name'];?></td>
+			<td class="name">商品名</td>
+			<td class="text"><?php echo $data['MyItem']['item_name']; ?></td>
 		</tr>
 		<tr>
-			<td>価格:</td>
+			<td>価格</td>
 			<td><?php echo $data['MyItem']['price']; ?></td>
 		</tr>
 		<tr>
-			<td>備考:</td>
+			<td>備考</td>
 			<td><?php echo $data['MyItem']['keyword']; ?></td>
 		</tr>
 
-		<input type="hidden" name="id" value="<?php echo $data['MyItem']['id']; ?>"">
+		<?php echo $this->Form->input('id', array('default' => $data['MyItem']['id'],'type'=>'hidden')); ?>
 </table>
 
-<input type="submit" value="削除">
-
-		<?php }
+ <?php
+		}
 
 		else{ ?>
 
 		<tr>
-			<td>商品名:</td>
-			<td></td>
+			<td class="name">商品名</td>
+			<td class="text"></td>
 		</tr>
 		<tr>
-			<td>価格:</td>
-			<td></td>
+			<td class="name">価格</td>
+			<td class="text"></td>
 		</tr>
 		<tr>
-			<td>備考:</td>
-		<td></td>
+			<td class="name">備考</td>
+		<td class="text"></td>
 		</tr>
 
-		<input type="hidden" name="id" value="">
+		<?php echo $this->Form->input('id', array('default' =>"" ,'type'=>'hidden')); ?>
 </table>
 
-<input type="submit" value="削除">
-
-		<?php
+<?php
 				print($msg);
 			}
-		?>
 
+			echo $this->Form->end("削除");
+		?>
+<br>
+		<form action="./menu">
+		<input type="submit" id='menu' value="メニューへ戻る">
 </form>
+</form>
+</div>

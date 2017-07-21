@@ -1,0 +1,95 @@
+@CHARSET "UTF-8"
+
+#list_table
+{
+	border: solid 3px #808080;
+	border-collapse: collapse
+}
+
+#list_table>tbody>tr>td
+{
+	border: solid 1px #808080;
+	border-style: solid dotted;
+	padding: 4px
+}
+
+th.id
+{
+	text-align: center;
+	width: 50px;
+}
+th.item_name
+{
+	text-align: center;
+	width: 150px;
+}
+th.price
+{
+	text-align: center;
+	width: 100px;
+}
+th.keyword
+{
+	text-align: center;
+	width: 200px;
+}
+
+td.id
+{
+	text-align: right;
+}
+td.price
+{
+	text-align: right;
+}
+
+#main_table
+{
+	text-align: left;
+	border: solid 2px #808080;
+	border-collapse: collapse
+}
+
+#main_table>tbody>tr>td
+{
+	border: 1px #808080;
+	border-style: solid dotted;
+	padding: 4px;
+}
+
+td.name
+{
+	width: 100px;
+	text-align: center;
+
+}
+td.text
+{
+	width: 300px;
+
+}
+
+table.result_table
+{
+	text-align: left;
+	border: solid 2px #808080;
+	border-collapse: collapse
+}
+
+table.result_table>tbody>tr>td
+{
+	border: 1px #808080;
+	border-style: solid dotted;
+	padding: 4px;
+	min-width: 60px
+}
+
+#top
+{
+	width: 300px;
+}
+
+#menu
+{
+	width: 200px;
+}
