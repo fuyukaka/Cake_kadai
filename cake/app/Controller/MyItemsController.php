@@ -42,6 +42,11 @@ class MyItemsController extends AppController
 			$search = array('conditions' =>array('MyItem.id' => $id));
 			$data = $this->MyItem->find('first',$search);
 		}
+		else
+		{
+			$data=null;
+			$id=null;
+		}
 		//ID検索の結果判定
 		$count = count($data);
 
@@ -51,7 +56,7 @@ class MyItemsController extends AppController
 		}
 		else
 		{
-			$msg = "該当する商品は存在しません";
+			$msg = "※該当する商品は存在しません";
 		}
 
 		//変数セット
@@ -65,7 +70,7 @@ class MyItemsController extends AppController
 	function change()
 	{
 		// レイアウト関係
-		$this->autoLayout = false;
+		$this->layout = "MyItems";
 		$id = $this->request->data['MyItem']['id'];
 
 
@@ -158,14 +163,18 @@ class MyItemsController extends AppController
 		//レイアウト
 		$this->layout = "MyItems";
 
-		$id = $this->request->data['MyItem']['id'];
-
-
 		//データベースから取り出し
-		if (isset($id))
+		if (isset($this->data['MyItem']['id']))
 		{
+			$id = $this->request->data['MyItem']['id'];
+
 			$search = array('conditions' =>array('MyItem.id' => $id));
 			$data = $this->MyItem->find('first',$search);
+		}
+		else
+		{
+			$data=null;
+			$id=null;
 		}
 
 		//ID検索の結果判定
@@ -177,7 +186,7 @@ class MyItemsController extends AppController
 		}
 		else
 		{
-			$msg = "該当する商品は存在しません";
+			$msg = "※該当する商品は存在しません";
 		}
 
 		//変数セット

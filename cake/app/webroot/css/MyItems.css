@@ -1,12 +1,12 @@
 @CHARSET "UTF-8"
 
-#list_table
+table.list_table
 {
 	border: solid 3px #808080;
 	border-collapse: collapse
 }
 
-#list_table>tbody>tr>td
+table.list_table>tbody>tr>td
 {
 	border: solid 1px #808080;
 	border-style: solid dotted;
@@ -43,14 +43,14 @@ td.price
 	text-align: right;
 }
 
-#main_table
+table.main_table
 {
 	text-align: left;
 	border: solid 2px #808080;
 	border-collapse: collapse
 }
 
-#main_table>tbody>tr>td
+table.main_table>tbody>tr>td
 {
 	border: 1px #808080;
 	border-style: solid dotted;
@@ -89,7 +89,13 @@ table.result_table>tbody>tr>td
 	width: 300px;
 }
 
-#menu
+.menu
 {
 	width: 200px;
 }
+
+p.error
+{
+	coler:red;
+}
+

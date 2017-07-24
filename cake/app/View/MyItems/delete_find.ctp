@@ -1,8 +1,10 @@
-<br>
 <div align="center">
+<h2>削除</h2>
 <table>
 <tr>
 <?php echo $this->Form->create("MyItem",array('type'=>'post','url'=>'./deleteFind'));
+if (isset($this->data['MyItem']['id']))
+{
 if(!($count==0))
 {
  echo "<th>".$this->Form->text('id', array('default' =>$data['MyItem']['id']));
@@ -11,12 +13,18 @@ if(!($count==0))
  {
  echo  "<th>".$this->Form->text('id', array('default' =>$id));
  }
+ }
+ else
+ {
+  echo  "<th>".$this->Form->text('id');
+ }
 echo  "<th>".$this->Form->end("ID検索"); ?>
 </tr>
 </table>
-<br><br>
-<table id="main_table" border="1">
+<br>
+<table class="main_table" border="1">
 	<?php echo $this->Form->create("MyItem",array('type'=>'post','url'=>'./delete'));
+	if (isset($this->data['MyItem']['id'])){
 		if(!($count==0))
 			{	?>
 
@@ -25,18 +33,21 @@ echo  "<th>".$this->Form->end("ID検索"); ?>
 			<td class="text"><?php echo $data['MyItem']['item_name']; ?></td>
 		</tr>
 		<tr>
-			<td>価格</td>
-			<td><?php echo $data['MyItem']['price']; ?></td>
+			<td class="name">価　格</td>
+			<td class="text"><?php echo $data['MyItem']['price']; ?></td>
 		</tr>
 		<tr>
-			<td>備考</td>
-			<td><?php echo $data['MyItem']['keyword']; ?></td>
+			<td class="name">備　考</td>
+			<td class="text"><?php echo $data['MyItem']['keyword']; ?></td>
 		</tr>
 
 		<?php echo $this->Form->input('id', array('default' => $data['MyItem']['id'],'type'=>'hidden')); ?>
-</table>
-
+</table><br>
  <?php
+
+
+			echo $this->Form->end("削除");
+
 		}
 
 		else{ ?>
@@ -46,26 +57,46 @@ echo  "<th>".$this->Form->end("ID検索"); ?>
 			<td class="text"></td>
 		</tr>
 		<tr>
-			<td class="name">価格</td>
+			<td class="name">価　格</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="name">備　考</td>
+		<td></td>
+		</tr>
+
+		</table>
+		<?php
+		echo '<p class="error">'.($msg).'</p>';
+			echo $this->Form->end();
+		}
+
+		}
+		else
+		{?>
+
+		<tr>
+			<td class="name">商品名</td>
 			<td class="text"></td>
 		</tr>
 		<tr>
-			<td class="name">備考</td>
-		<td class="text"></td>
+			<td class="name">価　格</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="name">備　考</td>
+		<td></td>
 		</tr>
 
-		<?php echo $this->Form->input('id', array('default' =>"" ,'type'=>'hidden')); ?>
-</table>
+		</table>
+		<?php
+		echo $this->Form->end();
 
-<?php
-				print($msg);
-			}
+ }?>
 
-			echo $this->Form->end("削除");
-		?>
 <br>
-		<form action="./menu">
-		<input type="submit" id='menu' value="メニューへ戻る">
-</form>
+
+<form action="./menu">
+		<input type="submit" class="menu" value="メニューへ戻る">
 </form>
 </div>

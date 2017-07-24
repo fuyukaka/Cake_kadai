@@ -1,6 +1,6 @@
-<br>
 <div align="center">
-<table id="list_table" border="1">
+<h2>一覧</h2>
+<table class="list_table" border="1">
 	<tr>
 		<th class="id">ID</td>
 		<th class="item_name">商品名</td>
@@ -18,6 +18,6 @@
 </table>
 <br><br>
 <form action="./menu">
-		<input type="submit" id='menu' value="メニューへ戻る">
+		<input type="submit" class="menu" value="メニューへ戻る">
 </form>
 </div>
