@@ -5,22 +5,22 @@ App::uses('AppController', 'Controller');
 class MyItemsController extends AppController
 {
 
-	//メニューページ
-	function index()
+	public $layout = 'MyItems';
+	public $msg = null;
+
+	//最初のページ
+	public function index()
 	{
-		$this->layout = "MyItems";
 	}
 
-	function menu()
+	//メニューページ
+	public function menu()
 	{
-		$this->layout = "MyItems";
 	}
 
 	//一覧
-	function list()
+	public function itemList()
 	{
-		//レイアウト
-		$this->layout = "MyItems";
 
 		// データベースから取り出し
 		$datas = $this->MyItem->find('all',array('order' => array('MyItem.id ASC')));
@@ -29,10 +29,8 @@ class MyItemsController extends AppController
 	}
 
 	//ID検索
-	function find()
+	public function changeForm()
 	{
-		//レイアウト
-		$this->layout = "MyItems";
 
 		//データベースから取り出し
 		if (isset($this->data['MyItem']['id']))
@@ -56,26 +54,25 @@ class MyItemsController extends AppController
 		}
 		else
 		{
-			$msg = "※該当する商品は存在しません";
+			$msg = '※該当する商品は存在しません';
 		}
 
 		//変数セット
-		$this->set('data',$data);
-		$this->set('msg',$msg);
-		$this->set('count',$count);
-		$this->set('id',$id);
+		$this->set(compact('data','id','count','msg'));
 	}
 
 	//更新
-	function change()
+	public function change()
 	{
-		// レイアウト関係
-		$this->layout = "MyItems";
-		$id = $this->request->data['MyItem']['id'];
+		//データの受け取り
+		if(isset($this->request->data['MyItem']['id']))
+		{
+			$id = $this->request->data['MyItem']['id'];
 
+			//データの更新
+			$data = $this->MyItem->save($this->request->data);
 
-		//データの更新
-		$data = $this->MyItem->save($this->request->data);
+		}
 
 		//結果の判定
 		if($data)
@@ -87,62 +84,32 @@ class MyItemsController extends AppController
 			$msg = "更新できませんでした";
 		}
 
+		//変数セット
 		$this->set('msg',$msg);
 
     }
 
     //ID検索ページ
-	function changepage()
+	public function changepage()
 	{
-		$this->layout = "MyItems";
 	}
 
 	//登録入力ページ
-	function addForm()
+	public function addForm()
 	{
-		$this->layout = "MyItems";
 	}
 
 	//登録
-	function add()
+	public function add()
 	{
-		$this->layout = "MyItems";
 
-		//データの受け取り
-		$id = $this->request->data['MyItem']['id'];
-
-		//IDの入力チェック
-		if(isset($id))
+		if(isset($this->request->data['MyItem']['id']))
 		{
-			//入力されていたら既存のものとかぶってないかチェック
-			$search = array('conditions' =>array('MyItem.id' => $id));
-			$data = $this->MyItem->find('first',$search);
 
-			$count = count($data);
-
-			//かぶっていなかったら
-			if($count==0)
-			{
-				$msg = null;
-
-				//データの登録
-				$data = $this->MyItem->save($this->request->data);
-			}
-
-			//かぶっていたら
-			else
-			{
-				$msg = "既に存在するIDです。";
-			}
-		}
-
-		//入力されていない場合の登録
-		else
-		{
 			//データの登録
 			$data = $this->MyItem->save($this->request->data);
-		}
 
+		}
 
 		//結果の判定
 		if (is_array($data))
@@ -154,14 +121,13 @@ class MyItemsController extends AppController
 			$msg = "登録できませんでした";
 		}
 
+		//変数セット
 		$this->set('msg',$msg);
 	}
 
 		//削除のID検索
-	function deleteFind()
+	public function deleteForm()
 	{
-		//レイアウト
-		$this->layout = "MyItems";
 
 		//データベースから取り出し
 		if (isset($this->data['MyItem']['id']))
@@ -173,8 +139,8 @@ class MyItemsController extends AppController
 		}
 		else
 		{
-			$data=null;
-			$id=null;
+			$data = null;
+			$id = null;
 		}
 
 		//ID検索の結果判定
@@ -186,29 +152,26 @@ class MyItemsController extends AppController
 		}
 		else
 		{
-			$msg = "※該当する商品は存在しません";
+			$msg = '※該当する商品は存在しません';
 		}
 
 		//変数セット
-		$this->set('data',$data);
-		$this->set('msg',$msg);
-		$this->set('id',$id);
-		$this->set('count',$count);
+		$this->set(compact('data','id','count','msg'));
 	}
 
 	//削除
-	function delete()
+	public function delete()
 	{
-		//レイアウト
-		$this->layout = "MyItems";
 
-		$id = $this->request->data['MyItem']['id'];
-
-		if (isset($id))
+		if ($this->request->data['MyItem']['id'])
 		{
+			$id = $this->request->data['MyItem']['id'];
+
+			//データの削除
 			$data = $this->MyItem->delete($id);
 		}
 
+		//結果の判定
 		if($data)
 		{
 			$msg = "削除しました";
@@ -219,14 +182,13 @@ class MyItemsController extends AppController
 			$msg = "削除できませんでした";
 		}
 
+		//変数セット
 		$this->set('msg',$msg);
 	}
 
 	//削除ページ
-	function deletepage()
+	public function deletepage()
 	{
-		//レイアウト
-		$this->layout = "MyItems";
 	}
 
 

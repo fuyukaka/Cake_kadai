@@ -69,21 +69,6 @@ td.text
 
 }
 
-table.result_table
-{
-	text-align: left;
-	border: solid 2px #808080;
-	border-collapse: collapse
-}
-
-table.result_table>tbody>tr>td
-{
-	border: 1px #808080;
-	border-style: solid dotted;
-	padding: 4px;
-	min-width: 60px
-}
-
 #top
 {
 	width: 300px;
@@ -96,6 +81,10 @@ table.result_table>tbody>tr>td
 
 p.error
 {
-	coler:red;
+	color: #ff0000;
 }
 
+text.form
+{
+	width: 500px;
+}
