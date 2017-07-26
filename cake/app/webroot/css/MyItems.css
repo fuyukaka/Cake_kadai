@@ -84,7 +84,12 @@ p.error
 	color: #ff0000;
 }
 
-text.form
+.form
 {
-	width: 500px;
+	width: 290px;
+}
+
+.id
+{
+	width: 100px;
 }

@@ -7,6 +7,7 @@ class MyItemsController extends AppController
 
 	public $layout = 'MyItems';
 	public $msg = null;
+	public $components = array('Paginator', 'Session');
 
 	//最初のページ
 	public function index()
@@ -16,6 +17,10 @@ class MyItemsController extends AppController
 	//メニューページ
 	public function menu()
 	{
+		$this->Session->delete('id');
+		$this->Session->delete('item_name');
+		$this->Session->delete('price');
+		$this->Session->delete('keyword');
 	}
 
 	//一覧
@@ -51,14 +56,30 @@ class MyItemsController extends AppController
 		if(!($count==0))
 		{
 			$msg = null;
+
 		}
 		else
 		{
 			$msg = '※該当する商品は存在しません';
 		}
 
+		//検索をかけられているかどうかの判断(ページ戻るだけだと検索してないから)
+		if(!($count==0))
+		{
+			$item_name = $data['MyItem']['item_name'];
+			$price = $data['MyItem']['price'];
+			$keyword = $data['MyItem']['keyword'];
+
+			//セッションに値を保存
+			$this->Session->write('id',$id);
+			$this->Session->write('item_name',$item_name);
+			$this->Session->write('price',$price);
+			$this->Session->write('keyword',$keyword);
+		}
+
 		//変数セット
 		$this->set(compact('data','id','count','msg'));
+
 	}
 
 	//更新
@@ -75,17 +96,25 @@ class MyItemsController extends AppController
 		}
 
 		//結果の判定
-		if($data)
+		if(is_array($data))
 		{
-			$msg = "更新しました";
+			$msg = '更新しました';
+			$this->Session->delete('id');
+			$this->Session->delete('item_name');
+			$this->Session->delete('price');
+			$this->Session->delete('keyword');
 		}
 		else
 		{
-			$msg = "更新できませんでした";
+			$msg = '更新できませんでした';
 		}
+
+		$errors = $this->MyItem->invalidFields();
+		$errorMassage = $errors['item_name'][0];
 
 		//変数セット
 		$this->set('msg',$msg);
+		$this->set('data',$data);
 
     }
 
@@ -109,20 +138,37 @@ class MyItemsController extends AppController
 			//データの登録
 			$data = $this->MyItem->save($this->request->data);
 
+			$id = $this->request->data['MyItem']['id'];
+			$item_name = $this->request->data['MyItem']['item_name'];
+			$price = $this->request->data['MyItem']['price'];
+			$keyword = $this->request->data['MyItem']['keyword'];
+
+			//セッションに値を保存
+			$this->Session->write('id',$id);
+			$this->Session->write('item_name',$item_name);
+			$this->Session->write('price',$price);
+			$this->Session->write('keyword',$keyword);
+
 		}
 
 		//結果の判定
 		if (is_array($data))
 		{
-			$msg = "登録しました";
+			$msg = '登録しました';
+
+			$this->Session->delete('id');
+			$this->Session->delete('item_name');
+			$this->Session->delete('price');
+			$this->Session->delete('keyword');
 		}
 		else
 		{
-			$msg = "登録できませんでした";
+			$msg = '登録できませんでした';
 		}
 
 		//変数セット
 		$this->set('msg',$msg);
+		$this->set('data',$data);
 	}
 
 		//削除のID検索
@@ -174,12 +220,12 @@ class MyItemsController extends AppController
 		//結果の判定
 		if($data)
 		{
-			$msg = "削除しました";
+			$msg = '削除しました';
 		}
 
 		else
 		{
-			$msg = "削除できませんでした";
+			$msg = '削除できませんでした';
 		}
 
 		//変数セット

@@ -7,16 +7,16 @@
 				{
 					if(!($count==0))
 					{
-						echo "<th>".$this->Form->text('id', array('default' =>$data['MyItem']['id'],'maxlength' => '4'));
+						echo "<th>".$this->Form->text('id', array('default' =>$data['MyItem']['id'],'maxlength' => '4','class'=>'id'));
 					}
 					else
 					{
-						echo  "<th>".$this->Form->text('id', array('default' =>$id,'maxlength' => '4'));
+						echo  "<th>".$this->Form->text('id', array('default' =>$id,'maxlength' => '4','class'=>'id'));
 					}
 				}
 				else
 				{
-					echo  "<th>".$this->Form->text('id',array('maxlength' => '4'));
+					echo  "<th>".$this->Form->text('id',array('maxlength' => '4','class'=>'id'));
 				}
 				echo  "<th>".$this->Form->end("ID検索"); ?>
 			</tr>
