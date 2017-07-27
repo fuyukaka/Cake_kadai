@@ -86,10 +86,8 @@ class MyItemsController extends AppController
 	public function change()
 	{
 		//データの受け取り
-		if(isset($this->request->data['MyItem']['id']))
+		if(isset($this->request->data['MyItem']))
 		{
-			$id = $this->request->data['MyItem']['id'];
-
 			//データの更新
 			$data = $this->MyItem->save($this->request->data);
 
@@ -109,12 +107,11 @@ class MyItemsController extends AppController
 			$msg = '更新できませんでした';
 		}
 
+		//配列でエラーを取得
 		$errors = $this->MyItem->invalidFields();
-		$errorMassage = $errors['item_name'][0];
 
 		//変数セット
-		$this->set('msg',$msg);
-		$this->set('data',$data);
+		$this->set(compact('msg','errors'));
 
     }
 
@@ -168,7 +165,6 @@ class MyItemsController extends AppController
 
 		//変数セット
 		$this->set('msg',$msg);
-		$this->set('data',$data);
 	}
 
 		//削除のID検索

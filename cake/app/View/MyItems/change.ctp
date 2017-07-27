@@ -1,5 +1,10 @@
 <div align="center">
 	<h2>結果画面</h2>
+	<?php foreach ($errors as $error => $message)
+		{
+			echo $message;
+
+	}?>
 	<table class="main_table">
 		<tr>
 			<td class="name">結 果</td>

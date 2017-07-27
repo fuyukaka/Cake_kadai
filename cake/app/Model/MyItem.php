@@ -32,8 +32,8 @@ class MyItem extends AppModel
 				'last' => true,
 			),
 			'maxLength' => array(
-				'rule' => array('maxLength', 3),
-				'message' => '最高3文字です。',
+				'rule' => array('maxLength', 4),
+				'message' => '最高4文字です。',
 				'last' => true,
 			)
 		),
