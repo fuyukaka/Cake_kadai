@@ -38,7 +38,7 @@ class MyItemsController extends AppController
 	{
 
 		//データベースから取り出し
-		if (isset($this->data['MyItem']['id']))
+		if (isset($this->request->data['MyItem']['id']))
 		{
 			$id = $this->request->data['MyItem']['id'];
 
@@ -131,7 +131,6 @@ class MyItemsController extends AppController
 
 		if(isset($this->request->data['MyItem']['id']))
 		{
-
 			//データの登録
 			$data = $this->MyItem->save($this->request->data);
 
@@ -163,8 +162,11 @@ class MyItemsController extends AppController
 			$msg = '登録できませんでした';
 		}
 
+		//配列でエラーを取得
+		$errors = $this->MyItem->invalidFields();
+
 		//変数セット
-		$this->set('msg',$msg);
+		$this->set(compact('msg','errors'));
 	}
 
 		//削除のID検索
@@ -207,7 +209,7 @@ class MyItemsController extends AppController
 
 		if ($this->request->data['MyItem']['id'])
 		{
-			$id = $this->request->data['MyItem']['id'];
+			$id = mb_convert_kana($this->request->data['MyItem']['id'], "n", "utf-8");
 
 			//データの削除
 			$data = $this->MyItem->delete($id);
